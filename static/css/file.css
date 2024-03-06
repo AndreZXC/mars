@@ -1,0 +1,20 @@
+h4 {
+  color: #ff8c66;
+  padding-left: 20px;
+}
+body {
+  background-image: url('/static/img/background.jpg');
+  background-size: cover;
+}
+label {
+  color: #ff8c66
+}
+h1 {
+  color: #ff8c66
+}
+div {
+  color: #ff8c66
+}
+.table td {
+  vertical-align: middle
+}
