@@ -29,6 +29,13 @@ def index():
     return render_template("index.html", jobs=jobs)
 
 
+@app.route('/tablejobs')
+def tablejobs():
+    db_sess = db_session.create_session()
+    jobs = db_sess.query(Jobs).all()
+    return render_template("tablejobs.html", jobs=jobs, title='ТАБЛИЦА')
+
+
 @loginmng.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()

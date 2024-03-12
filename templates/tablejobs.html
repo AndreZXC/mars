@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 style="text-align: center">Таблица работ</h1>
+{% for item in jobs %}
+<h2>Job #{{ item.id }}</h2>
+    <table class="table table-warning" style="text-align: center; border-rounded: 5px">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Тимлид</th>
+                <th>Участники</th>
+                <th>Продолжительность</th>
+                <th>Finished?</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>{{ item.job }}</td>
+            <td>{{ item.lead.name }} {{ item.lead.surname }}</td>
+            <td>{{ item.collaborators }}</td>
+            <td>{{ item.duration }} hours</td>
+            <td>
+                {% if item.is_finished %}
+                    <div class="alert alert-success" role="alert">
+                        Завершена
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger" role="alert">
+                        Не завершена
+                    </div>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+{% endfor %}
+{% endblock %}
