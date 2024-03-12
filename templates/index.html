@@ -17,6 +17,11 @@
         <div>
             Дата начала: {{ item.start_date }}
         </div>
+        {% if item.categories %}
+            <div>
+                Тип работы: {{ item.categories[0].name }}
+            </div>
+        {% endif %}
         {% if item.is_finished %}
             <div class="alert alert-success" role="alert">
                 Завершена

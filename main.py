@@ -8,6 +8,7 @@ from data import db_session, jobs_api2
 from data.jobs import Jobs
 from data.users import User
 from data.departaments import Departament
+from data.category import Category
 from froms.depeart import DepartamentForm
 from froms.login import LoginForm
 from froms.newjob import NewJobForm
@@ -95,6 +96,10 @@ def newjob():
                    team_leader=form.teamlead.data,
                    is_finished=form.completed.data)
         job.dates(form.start_date.data)
+        if form.category.data != 'NoneType':
+            job.categories.append(
+                db_sess.query(Category).filter(Category.name == form.category.data).first()
+            )
         db_sess.add(job)
         db_sess.commit()
         return redirect('/')
@@ -118,6 +123,7 @@ def editjob(idjob):
             form.teamlead.data = job.team_leader
             form.teamlead.render_kw = {'readonly': True}
             form.submit.label.text = 'Изменить'
+            form.category.data = job.categories[0].name
         else:
             abort(404)
     if form.validate_on_submit():
@@ -126,9 +132,13 @@ def editjob(idjob):
         if job:
             job.job = form.job.data
             job.work_size = form.work_size.data
-            job.start_date = form.start_date.data
+            job.dates(form.start_date.data)
             job.collaborators = form.collaborators.data
             job.is_finished = form.completed.data
+            if form.category.data != 'NoneType':
+                job.categories.append(
+                    db_sess.query(Category).filter(Category.name == form.category.data).first()
+                )
             db_sess.commit()
             return redirect('/')
         else:
@@ -220,6 +230,7 @@ def deldep(depid):
 
 def main():
     db_session.global_init("db/users.db")
+    db_sess = db_session.create_session()
     api.add_resource(jobs_api2.JobResourse, '/api/job/<int:jobid>')
     api.add_resource(jobs_api2.JobListResourse, '/api/jobs')
     app.run()
