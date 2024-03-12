@@ -1,6 +1,6 @@
 import datetime as dt
 
-from flask import Flask, render_template, redirect, request, abort
+from flask import Flask, render_template, redirect, abort, request
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from flask_restful import Api, abort
 

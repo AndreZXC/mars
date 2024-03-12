@@ -17,6 +17,7 @@ class Jobs(SqlAlchemyBase, SerializerMixin):
     start_date = sqlalchemy.Column(sqlalchemy.DateTime, nullable=True)
     end_date = sqlalchemy.Column(sqlalchemy.DateTime, nullable=True)
     is_finished = sqlalchemy.Column(sqlalchemy.Boolean)
+    categories = orm.relationship("cats", secondary="association", backref="jobs")
 
     def dates(self, start=dt.datetime.now()):
         self.start_date = start
